@@ -18,7 +18,7 @@ public class FormPom {
     public FormPom(WebDriver driver) {
         this.driver = driver;
         this.js = (JavascriptExecutor) driver;
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         this.actions = new Actions(driver);
         PageFactory.initElements(driver, this);
     }
@@ -36,24 +36,41 @@ public class FormPom {
     @FindBy(id = "react-select-4-input") WebElement city;
     @FindBy(id = "submit") WebElement submitButton;
 
-    public void setFirstName(String name) { firstName.clear(); firstName.sendKeys(name); }
-    public void setLastName(String name) { lastName.clear(); lastName.sendKeys(name); }
-    public void setEmail(String mail) { email.clear(); email.sendKeys(mail); }
-    public void setFemaleGender() { femaleGender.click(); }
-    public void setMobile(String number) { mobile.clear(); mobile.sendKeys(number); }
+    public void setFirstName(String name) {
+        wait.until(ExpectedConditions.visibilityOf(firstName)).clear();
+        firstName.sendKeys(name);
+    }
+
+    public void setLastName(String name) {
+        wait.until(ExpectedConditions.visibilityOf(lastName)).clear();
+        lastName.sendKeys(name);
+    }
+
+    public void setEmail(String mail) {
+        wait.until(ExpectedConditions.visibilityOf(email)).clear();
+        email.sendKeys(mail);
+    }
+
+    public void setFemaleGender() {
+        wait.until(ExpectedConditions.elementToBeClickable(femaleGender));
+        js.executeScript("arguments[0].click();", femaleGender);
+    }
+
+    public void setMobile(String number) {
+        wait.until(ExpectedConditions.visibilityOf(mobile)).clear();
+        mobile.sendKeys(number);
+    }
 
     public void setDateOfBirth(String dob) {
+        wait.until(ExpectedConditions.elementToBeClickable(dateOfBirth));
         dateOfBirth.sendKeys(Keys.CONTROL + "a");
         dateOfBirth.sendKeys(dob);
         dateOfBirth.sendKeys(Keys.ENTER);
     }
 
-    /** Subjects corect */
     public void setSubjects(String subject) {
         js.executeScript("arguments[0].scrollIntoView(true);", subjects);
         wait.until(ExpectedConditions.elementToBeClickable(subjects));
-
-        subjects.click();
         subjects.sendKeys(subject);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("react-select-2-option-0")));
         subjects.sendKeys(Keys.ENTER);
@@ -61,28 +78,34 @@ public class FormPom {
 
     public void setHobbyReading() {
         js.executeScript("arguments[0].scrollIntoView(true);", hobbyReading);
+        wait.until(ExpectedConditions.elementToBeClickable(hobbyReading));
         js.executeScript("arguments[0].click();", hobbyReading);
     }
 
     public void setAddress(String addr) {
         js.executeScript("arguments[0].scrollIntoView(true);", address);
+        wait.until(ExpectedConditions.visibilityOf(address));
+        address.clear();
         address.sendKeys(addr);
     }
 
     public void setState(String st) {
         js.executeScript("arguments[0].scrollIntoView(true);", state);
+        wait.until(ExpectedConditions.elementToBeClickable(state));
         state.sendKeys(st);
         state.sendKeys(Keys.ENTER);
     }
 
     public void setCity(String ct) {
         js.executeScript("arguments[0].scrollIntoView(true);", city);
+        wait.until(ExpectedConditions.elementToBeClickable(city));
         city.sendKeys(ct);
         city.sendKeys(Keys.ENTER);
     }
 
     public void clickSubmit() {
         js.executeScript("arguments[0].scrollIntoView(true)", submitButton);
+        wait.until(ExpectedConditions.elementToBeClickable(submitButton));
         js.executeScript("arguments[0].click();", submitButton);
     }
 }
