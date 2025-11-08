@@ -25,3 +25,9 @@ jobs:
 
       - name: Run tests
         run: mvn test
+
+      - name: Upload Test Videos
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-videos
+          path: test-videos/
