@@ -1,56 +1,101 @@
-<dependencies>
-   
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-    <!-- JUnit -->
-    <dependency>
-        <groupId>junit</groupId>
-        <artifactId>junit</artifactId>
-        <version>4.13.2</version>
-        <scope>test</scope>
-    </dependency>
+    <modelVersion>4.0.0</modelVersion>
 
-    <dependency>
-        <groupId>com.github.stephenc.monte</groupId>
-        <artifactId>monte-screen-recorder</artifactId>
-        <version>0.7.7</version>
-    </dependency>
+    <groupId>org.example</groupId>
+    <artifactId>test-automation</artifactId>
+    <version>1.0-SNAPSHOT</version>
 
-    <!-- Selenium Java -->
-    <dependency>
-        <groupId>org.seleniumhq.selenium</groupId>
-        <artifactId>selenium-java</artifactId>
-        <version>4.24.0</version>
-    </dependency>
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+    </properties>
 
-    <!-- Selenium DevTools pentru Chrome (corespunde versiunii Chrome 142) -->
-    <dependency>
-        <groupId>org.seleniumhq.selenium</groupId>
-        <artifactId>selenium-devtools-v142</artifactId>
-        <version>4.24.0</version>
-    </dependency>
+    <dependencies>
+        <!-- JUnit -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.2</version>
+            <scope>test</scope>
+        </dependency>
 
-    <!-- SLF4J Simple pentru loguri -->
-    <dependency>
-        <groupId>org.slf4j</groupId>
-        <artifactId>slf4j-simple</artifactId>
-        <version>1.7.36</version>
-    </dependency>
+        <dependency>
+            <groupId>atu</groupId>
+            <artifactId>test-recorder</artifactId>
+            <version>2.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/libs/ATUTestRecorder_2.1.jar</systemPath>
+        </dependency>
 
-    <!-- TestNG -->
-    <dependency>
-        <groupId>org.testng</groupId>
-        <artifactId>testng</artifactId>
-        <version>7.10.2</version>
-        <scope>test</scope>
-    </dependency>
-
-    <!-- WebDriverManager -->
-    <dependency>
-        <groupId>io.github.bonigarcia</groupId>
-        <artifactId>webdrivermanager</artifactId>
-        <version>5.9.2</version>
-    </dependency>
-
-</dependencies>
+        <dependency>
+            <groupId>atu</groupId>
+            <artifactId>reporter</artifactId>
+            <version>5.1.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/libs/ATUReporter_Selenium_testNG_5.1.1.jar</systemPath>
+        </dependency>
 
 
+        <!-- Selenium -->
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>4.24.0</version>
+        </dependency>
+
+
+
+        <!-- WebDriverManager -->
+        <dependency>
+            <groupId>io.github.bonigarcia</groupId>
+            <artifactId>webdrivermanager</artifactId>
+            <version>5.9.2</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>1.7.36</version>
+        </dependency>
+
+
+
+        <!-- TestNG -->
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>7.10.2</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- Maven Surefire Plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.2.5</version>
+                <configuration>
+                    <forkCount>1</forkCount>
+                    <reuseForks>true</reuseForks>
+                    <testFailureIgnore>false</testFailureIgnore>
+                    <forkedProcessTimeoutInSeconds>300</forkedProcessTimeoutInSeconds>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <repositories>
+        <repository>
+            <id>central</id>
+            <url>https://repo.maven.apache.org/maven2/</url>
+        </repository>
+    </repositories>
+
+</project>
